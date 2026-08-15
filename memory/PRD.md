@@ -42,3 +42,8 @@
 - Added captions to the supplied clinic gallery images and a visible final-approval note.
 - Added explicit confirmation markers for treatment list, clinic hours, doctor/team profiles, and review copy so unverified content is not presented as fact.
 - Regression testing passed on desktop and mobile with no horizontal overflow or console-visible errors.
+
+## Polish update (2026-08-15)
+- Removed the duplicate booking CTA from the desktop header so one clear booking action remains.
+- Reworked philosophy, metrics, review, and journal wording for a more natural, human-reviewed tone.
+- Verified the revised header and copy on desktop and mobile with no layout regressions.
