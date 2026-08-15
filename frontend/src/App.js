@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDownRight, ArrowRight, ChevronDown, Menu, Phone, MapPin, X } from "lucide-react";
 import "@/App.css";
 import "@/Enquiry.css";
@@ -22,6 +22,36 @@ function App() {
   const [openFaq, setOpenFaq] = useState(0);
   const [openService, setOpenService] = useState(0);
   const [formStatus, setFormStatus] = useState("");
+  useEffect(() => {
+    const els = document.querySelectorAll(".intro-grid>div,.metrics-grid>div,.statement-inner,.philosophy-inner>*,.philosophy-points>div,.care-intro,.accordion,.section-heading,.card-grid>article,.center-heading,.compare,.review-score,.review-quote,.gallery-grid figure,.gallery-note,.team-inner>div,.contact-grid>div,.faq-grid>div,.journal-grid>article,.final-content>*");
+    els.forEach((el) => el.classList.add("reveal"));
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in-view");
+      io.unobserve(e.target);
+      setTimeout(() => e.target.classList.remove("reveal", "in-view"), 1500);
+    }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    els.forEach((el) => io.observe(el));
+    const heroImg = document.querySelector(".hero-image");
+    const finalImg = document.querySelector(".final-cta>img");
+    const header = document.querySelector(".header");
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        header.classList.toggle("scrolled", y > 8);
+        if (y < window.innerHeight) heroImg.style.transform = `translateY(${y * 0.22}px) scale(1.08)`;
+        const r = finalImg.parentElement.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) finalImg.style.transform = `translateY(${(r.top - window.innerHeight / 2) * -0.06}px) scale(1.18)`;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => { window.removeEventListener("scroll", onScroll); io.disconnect(); };
+  }, []);
   const nav = ["About", "Treatments", "Reviews", "Gallery", "Contact"];
   const services = ["Check-ups and cleaning", "Fillings and restorations", "Root canal treatment", "Crowns and bridges", "Dental implants", "Whitening and smile enhancement"];
   const faqs = [
@@ -41,7 +71,7 @@ function App() {
     <div className="utility"><div className="container utility-inner"><span data-testid="utility-location"><MapPin size={13}/> Jamia Nagar, Okhla · New Delhi</span><div className="utility-links"><a data-testid="utility-phone" href={phone}><Phone size={13}/> +91 83687 84559</a><a data-testid="utility-directions" href={maps} target="_blank" rel="noreferrer">Directions <ArrowUpRight/></a><a data-testid="utility-whatsapp" href={whatsapp} target="_blank" rel="noreferrer">WhatsApp booking <ArrowUpRight/></a></div></div></div>
     <header className="header"><div className="container header-inner"><a data-testid="brand-logo-link" href="#top" className="brand"><img src={logo} alt="DENTAL CLINICa logo"/></a><nav className={menuOpen ? "nav nav-open" : "nav"}>{nav.map((item) => <a data-testid={`nav-${item.toLowerCase()}`} key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}>{item}</a>)}</nav><div className="header-actions"><a data-testid="header-phone" href={phone}><Phone size={15}/><span>+91 83687 84559</span></a><Button testid="header-book-cta" href={whatsapp}>Book appointment</Button><button data-testid="mobile-menu-button" className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X/> : <Menu/>}</button></div></div></header>
 
-    <section id="top" className="hero"><img className="hero-image" src={photos[0]} alt="DENTAL CLINICa treatment room"/><div className="hero-shade"/><div className="container hero-content"><p className="eyebrow">DENTAL CLINICa · NEW DELHI</p><h1>Care that makes<br/><em>room for confidence.</em></h1><p className="hero-copy">A considered dental experience in Jamia Nagar, Okhla — clear guidance, modern surroundings, and a calmer way forward.</p><div className="hero-buttons"><Button testid="hero-book-button" href={whatsapp}>Book an appointment</Button><a data-testid="hero-call-button" className="text-link light-link" href={phone}>Call the clinic <ArrowRight/></a></div><div className="hero-trust"><span className="rating-mark">4.9<span>★</span></span><div><strong>Google rating</strong><small>288 public reviews</small></div><a data-testid="hero-google-link" href={maps} target="_blank" rel="noreferrer"><ArrowUpRight/></a></div></div><div className="hero-bottom"><div className="container hero-bottom-inner"><span>Precise care. Human conversation.</span><span>Fa-99, Thokar -4 · Plus Code H74X+26</span></div></div></section>
+    <section id="top" className="hero"><img className="hero-image" src={photos[0]} alt="DENTAL CLINICa treatment room"/><div className="hero-shade"/><div className="container hero-content"><p className="eyebrow">DENTAL CLINICa · NEW DELHI</p><h1>Care that makes<br/><em>room for confidence.</em></h1><p className="hero-copy">A considered dental experience in Jamia Nagar, Okhla — clear guidance, modern surroundings, and a calmer way forward.</p><div className="hero-buttons"><Button testid="hero-book-button" href={whatsapp}>Book an appointment</Button><a data-testid="hero-call-button" className="text-link light-link" href={phone}>Call the clinic <ArrowRight/></a></div><a data-testid="hero-rating-pill" className="hero-rating-pill" href={maps} target="_blank" rel="noreferrer"><span className="pill-star">★</span><strong>4.9 on Google</strong><small>288 reviews</small><ArrowUpRight/></a></div><div className="hero-bottom"><div className="container hero-bottom-inner"><span>Precise care. Human conversation.</span><span>Fa-99, Thokar -4 · Plus Code H74X+26</span></div></div></section>
 
     <section id="about" className="section intro"><div className="container intro-grid"><div><p className="eyebrow red">A quieter kind of clinic</p><h2>Good care begins<br/>with being <em>heard.</em></h2><p className="lead">DENTAL CLINICa is a dental clinic in Jamia Nagar, Okhla, New Delhi. We believe the first step is a clear conversation — one that gives you context, confidence, and a plan that feels right.</p><a data-testid="about-contact-link" className="text-link" href="#contact">Meet us at the clinic <ArrowRight/></a></div><div className="intro-images"><img className="intro-main" src={photos[1]} alt="Dental chair and clinic interior"/><div className="image-note"><span>01</span><span>A considered space<br/>for your next step</span></div><img className="intro-small" src={photos[2]} alt="DENTAL CLINICa treatment space"/></div></div></section>
 

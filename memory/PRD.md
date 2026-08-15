@@ -47,3 +47,12 @@
 - Removed the duplicate booking CTA from the desktop header so one clear booking action remains.
 - Reworked philosophy, metrics, review, and journal wording for a more natural, human-reviewed tone.
 - Verified the revised header and copy on desktop and mobile with no layout regressions.
+
+## Motion & depth update (2026-08-15, fork)
+- Hero: staggered entrance animation (eyebrow→h1→copy→buttons→pill), Ken Burns zoom + scroll parallax on hero image
+- Rating moved from right-side card to a glass pill (bottom-left, below Book button) — data-testid="hero-rating-pill"
+- Scroll reveals (IntersectionObserver, staggered nth-child delays) across all sections; classes auto-removed post-reveal to keep hover transitions snappy
+- Final CTA image parallax; header gains shadow on scroll
+- Hover depth: service cards lift + image de-grayscale, journal cards lift, gallery zoom + overlay figcaptions, metrics red on hover, team cards red border, compare rows tint
+- Consistency fix: ALL buttons now hover to white bg + ink text + ink border (was invisible white-on-white in light sections)
+- prefers-reduced-motion fully respected (animations off, content visible)
