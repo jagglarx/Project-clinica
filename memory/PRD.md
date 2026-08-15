@@ -36,3 +36,9 @@
 ## Remaining next tasks
 - Confirm and publish official treatments, hours, doctor/team profiles and clinic-approved imagery.
 - Add privacy/terms destinations and any clinic-approved social links.
+
+## Feature update (2026-08-15)
+- Added a written enquiry form with required name/phone fields, concern and reply preferences, success feedback, and WhatsApp message handoff.
+- Added captions to the supplied clinic gallery images and a visible final-approval note.
+- Added explicit confirmation markers for treatment list, clinic hours, doctor/team profiles, and review copy so unverified content is not presented as fact.
+- Regression testing passed on desktop and mobile with no horizontal overflow or console-visible errors.
